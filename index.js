@@ -1,25 +1,20 @@
-const { Client, GatewayIntentBits, SlashCommandBuilder } = require('discord.js');
-
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
-
-client.once('ready', () => {
-  console.log(`Ready! Logged in as ${client.user.tag}`);
-
-  // Define your command
-  const command = new SlashCommandBuilder()
-    .setName('ping')
-    .setDescription('Replies with Pong!');
-
-  // Register the command
-  client.application.commands.create(command);
+const Discord = require("discord.js");
+ 
+const client = new Discord.Client({
+    intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS", "MESSAGE_CONTENT"],
+    partials: ["CHANNEL", "MESSAGE"]
 });
-
-client.on('interactionCreate', async interaction => {
-  if (!interaction.isChatInputCommand()) return;
-
-  if (interaction.commandName === 'ping') {
-    await interaction.reply('Pong!');
-  }
+ 
+const token = ("") // your bot token here
+ 
+client.on('ready', async () => {
+    console.log(`Client has been initiated! ${client.user.username}`)
 });
-
-  client.login('YOUR_BOT_TOKEN');
+ 
+client.on('messageCreate', async (message) => {
+    if (message.content.toLowerCase() === "test") {
+        message.reply("Test successful!");
+    }
+});
+ 
+client.login(token);
